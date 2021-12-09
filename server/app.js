@@ -7,14 +7,14 @@ const app = express();
 app.set('view engine', 'EJS');
 app.set('views', 'views');
 
-const adminData = require('./routes/admin.js');
+const adminRoutes = require('./routes/admin.js');
 const showRoutes = require('./routes/show');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/admin', adminData.routes);
+app.use('/admin', adminRoutes);
 app.use(showRoutes);
 
 app.use((req, res, next) => {

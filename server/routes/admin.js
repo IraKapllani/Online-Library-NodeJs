@@ -1,23 +1,19 @@
-const express = require('express');
-
-const router = express.Router();
 
 const path = require('path');
 
-const rootDir = require('../util/path');
+const express = require('express');
+
+const booksController = require('../controllers/books');
+
+const router = express.Router();
 
 const books = [];
 
-router.get( '/add-books', (req, res, next)=>{
-   res.sendFile(path.join(__dirname, '../', 'views', 'add-books.html'));
-});
+// /admin/add-books => GET
+router.get('/add-books', booksController.getAddBooks);
 
-router.post( '/add-books', (req, res, next)=>{
-    books.push({title: req.body.title});
-   res.redirect('/');
-});
+// /admin/add-books => POST
+router.post('/add-books', booksController.postAddBooks);
 
-
-
-exports.routes = router;
-exports.books = books;
+module.exports = router;
+// exports.books = books;
