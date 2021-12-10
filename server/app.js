@@ -13,13 +13,12 @@ const showRoutes = require('./routes/show');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const errorController = require('./controllers/error');
 
 app.use('/admin', adminRoutes);
 app.use(showRoutes);
 
-app.use((req, res, next) => {
-    res.status(404).render('404', {pageTitle: 'Page not found'});
-});
+app.use(errorController.get404Page);
 
 
-app.listen(3000);
+app.listen(3001);
