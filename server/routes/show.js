@@ -1,4 +1,3 @@
-
 const path = require('path');
 
 const showController = require('../controllers/show');
@@ -9,7 +8,9 @@ const router = express.Router();
 
 router.get('/', showController.getIndex);
 router.get('/books', showController.getBooks);
+router.get('/books/:bookId', showController.getBook);
 router.get('/reservations', showController.getReservations);
 router.get('/cancel', showController.getCancel);
+router.get('/reservationlist', showController.getReservationsList);
 
 module.exports = router;

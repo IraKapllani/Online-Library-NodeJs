@@ -1,9 +1,9 @@
 <%- include('../includes/head.ejs')%>
-    <link rel="stylesheet" href="/css/books.css">
+<link rel="stylesheet" href="/css/books.css">
 </head>
 
 <body>
-   <%- include('../includes/navigation.ejs')%>
+    <%- include('../includes/navigation.ejs')%>
 
     <main>
         <% if(books.length > 0) { %>
@@ -11,23 +11,27 @@
             <% for (let book of books) { %>
             <article class="card product-item">
                 <header class="card__header">
-                    <h1 class="product__title">  <%= book.title %></h1>
+                    <h1 class="product__title"> <%= book.title %></h1>
                 </header>
                 <div class="card__image">
                     <img src="<%= book.imageUrl %>" alt="<%= book.title %>">
                 </div>
                 <div class="card__content">
-                     <h2 class="product__price"><%= book.author %></h2> 
+                    <h2 class="product__price"><%= book.author %></h2>
                     <p class="product__description"><%= book.description %></p>
                 </div>
                 <div class="card__actions">
-                    <button class="btn">Book Reservation</button>
+                    <a href="/books/<%= book.id %>" class="btn">Details</a>
+                    <form action="/resrve" method="POST">
+                        <button class="btn">Book Reservation</button>
+                    </form>
+
                 </div>
             </article>
             <% } %>
         </div>
         <% } else { %>
-            <h1>No Books Found</h1>
-            <% } %>
+        <h1>No Books Found</h1>
+        <% } %>
     </main>
-<%- include('../includes/end.ejs') %>
+    <%- include('../includes/end.ejs') %>

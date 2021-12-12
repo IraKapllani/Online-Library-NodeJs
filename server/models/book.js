@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+
 const p = path.join(
     path.dirname(process.mainModule.filename),
     'data',
@@ -23,6 +24,7 @@ module.exports = class Book {
         this.author = author;
     }
     save() {
+        this.id = Math.random().toString();
       getBooksFromFile(books  => {
           books.push(this);
           fs.writeFile(p, JSON.stringify(books), (err)=> {
@@ -34,4 +36,13 @@ module.exports = class Book {
     static fetchAll(cb){
         getBooksFromFile(cb);
     }
-}
+
+    static findBookById(id, cb){
+        getBooksFromFile(books => {
+            const book = books.find(p => p.id === id);
+            cb(book);
+        });
+    }
+
+    
+};

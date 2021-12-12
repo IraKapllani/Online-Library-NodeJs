@@ -1,0 +1,19 @@
+<%- include('../includes/head.ejs')%>
+
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="centered">
+        <h1><%= book.title %> </h1>
+        <hr>
+        <div>
+            <img src="<%= book.imageUrl %>" alt="<%= book.title %>">
+        </div>
+        <h2><%= book.author %></h2>
+        <p><%= book.description %></h2>
+            <form action="/reservations" method="POST">
+                <button class="btn" type="submit">Reserve this book</button>
+            </form>
+    </main>
+    <%- include('../includes/end.ejs') %>
