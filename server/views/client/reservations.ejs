@@ -3,5 +3,23 @@
 </head>
 
 <body>
-<%- include('../includes/navigation.ejs') %>
-<%- include('../includes/end.ejs') %>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <% if (books.length > 0) { %>
+        <ul>
+            <% books.forEach(b => { %>
+            <li>
+                <p><%= b.bookData.title %></p>
+                <form action="/delete-reservation" method="POST">
+                    <input type="hidden" value="<%= b.bookData.id %>" name="bookId">
+                    <button class="btn" type="submit">Delete Reservation</button>
+                </form>
+
+            </li>
+            <%  }) %>
+        </ul>
+        <% } else { %>
+        <h1>You haven't made any reservations!</h1>
+        <% } %>
+    </main>
+    <%- include('../includes/end.ejs') %>

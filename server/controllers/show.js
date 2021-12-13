@@ -1,4 +1,5 @@
-const Book = require('../models/book')
+const Book = require('../models/book');
+const Reservations = require('../models/reservations')
 
 
 
@@ -17,7 +18,6 @@ const Book = require('../models/book')
     const bookId = req.params.bookId;
     Book.findBookById(bookId, book => 
       { 
-          console.log(Book);
         res.render('client/book-detail', {
              book: book,
              pageTitle: book.title, 
@@ -43,14 +43,32 @@ const Book = require('../models/book')
 
   
   exports.getReservations = (req, res, next) => {
-      Book.fetchAll((books) => {
-              res.render('client/reservations', {
-                  pageTitle: 'Reservations',
-                  path: '/reservations',
-              });
-          }
-      );
-  }
+     Reservations.getResevations(reservations => {
+         Book.fetchAll(books => {
+             const reservedBooks = [];
+             for (book of books){
+                 const reservationData = reservations.books.find(b => b.id === book.id);
+                 if(reservationData){
+                    reservedBooks.push({bookData : book});
+                 }
+             }
+            res.render('client/reservations', {
+                pageTitle: 'Reservations',
+                path: '/reservations',
+                books: reservedBooks
+            });
+         });
+     });      
+  };
+
+  exports.postReservations = (req, res, next) => {
+        const bookId = req.body.bookId; //name used in the input
+        Book.findBookById(bookId, (book) => {
+                Reservations.addBook(bookId);
+        })
+        res.redirect('/reservations');
+  };
+
 
 exports.getCancel = (req, res, next) => {
     Book.fetchAll((books) => {
@@ -61,6 +79,15 @@ exports.getCancel = (req, res, next) => {
         }
     );
 }
+
+
+exports.postDeleteReservations = (req, res, next) => {
+    const bookId = req.body.bookId;
+    Book.findBookById(bookId, book => {
+        Reservations.deleteById(bookId);
+        res.redirect('/reservations');
+    });
+};
 
 exports.getReservationsList = (req, res, next) => {
     Book.fetchAll((books) => {

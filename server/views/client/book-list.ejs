@@ -22,9 +22,7 @@
                 </div>
                 <div class="card__actions">
                     <a href="/books/<%= book.id %>" class="btn">Details</a>
-                    <form action="/resrve" method="POST">
-                        <button class="btn">Book Reservation</button>
-                    </form>
+                    <%- include('../includes/reservations.ejs', {book: book}) %>
 
                 </div>
             </article>

@@ -20,9 +20,7 @@
                         <h2 class="product__price"><%= book.author %></h2>
                         <p class="product__description"><%= book.description %></p>
                     </div>
-                    <div class="card__actions">
-                        <button class="btn">Book Reservation</button>
-                    </div>
+                    <%- include('../includes/reservations.ejs', {book: book}) %>
                 </article>
             <% } %>
         </div>

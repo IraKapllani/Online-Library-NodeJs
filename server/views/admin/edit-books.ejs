@@ -1,0 +1,34 @@
+<%- include('../includes/head.ejs')%>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+<%- include('../includes/navigation.ejs')%>
+
+    <main>
+        <form class="product-form" action="/admin/<% if (editing) { %>edit-books<% } else { %> add-books <% } %>" method="POST">
+            <div class="form-control">
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" value="<% if (editing) { %><%= book.title %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="imageUrl">Image Url</label>
+                <input type="text" name="imageUrl" id="imageUrl" value="<% if (editing) { %><%= book.imageUrl %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="author">Author</label>
+                <input type="text" name="author" id="author" value="<% if (editing) { %><%= book.author %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" value="<% if (editing) { %><%= book.description %><% } %>"><% if (editing) { %><%= book.description %><% } %></textarea>
+            </div>
+            <% if (editing) { %> 
+                <input type="hidden" value="<%= book.id %>" name="bookId">
+             <% } %>
+                
+            <button class="btn" type="submit"><% if (editing) { %> Update Book <% } else { %> Add Book <% } %> </button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>

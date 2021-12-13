@@ -12,8 +12,6 @@
         </div>
         <h2><%= book.author %></h2>
         <p><%= book.description %></h2>
-            <form action="/reservations" method="POST">
-                <button class="btn" type="submit">Reserve this book</button>
-            </form>
+            <%- include('../includes/reservations.ejs') %>
     </main>
     <%- include('../includes/end.ejs') %>
