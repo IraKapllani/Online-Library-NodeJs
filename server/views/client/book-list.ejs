@@ -21,7 +21,7 @@
                     <p class="product__description"><%= book.description %></p>
                 </div>
                 <div class="card__actions">
-                    <a href="/books/<%= book.id %>" class="btn">Details</a>
+                    <a href="/books/<%= book._id %>" class="btn">Details</a>
                     <%- include('../includes/reservations.ejs', {book: book}) %>
 
                 </div>

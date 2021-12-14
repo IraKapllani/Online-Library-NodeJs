@@ -21,7 +21,7 @@ router.get('/edit-books/:bookId', adminController.getEditBooks);
 
 router.post('/edit-books', adminController.postEditBooks);
 
-router.post('/delete-books', adminController.postDeleteBooks);
+// router.post('/delete-books', adminController.postDeleteBooks);
 
 module.exports = router;
 // exports.books = books;

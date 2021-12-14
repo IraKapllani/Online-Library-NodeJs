@@ -39,7 +39,7 @@ module.exports = class Reservations {
         });
     }
 
-    static deleteById(id) {
+    static deleteById(id) {e
         fs.readFile(p, (err, fileContent) => {
             if (err) {
                 return;

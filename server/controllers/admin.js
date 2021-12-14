@@ -1,4 +1,7 @@
+const mongodb = require('mongodb');
 const Book = require('../models/book');
+
+const ObjectId = mongodb.ObjectId;
 
 
 exports.getAddBooks = (req, res, next) => {
@@ -15,9 +18,14 @@ exports.postAddBooks = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const author = req.body.author;
     const description = req.body.description;
-    const book = new Book(null, title, imageUrl, author, description);
-    book.save();
-    res.redirect('/');
+    const book = new Book(title, imageUrl, author, description);
+    book.save().then(result => {
+        console.log('Created Book');
+        res.redirect('/admin/books');
+    })
+    .catch(err => {
+        console.log(err);
+    });
 };
 
 exports.getEditBooks = (req, res, next) => {
@@ -26,8 +34,9 @@ exports.getEditBooks = (req, res, next) => {
         return res.redirect('/');
     }
     const bookId = req.params.bookId;
-    Book.findBookById(bookId, book => {
-        if(!book){
+    Book.findById(bookId)
+    .then(book => {
+        if (!book) {
             return res.redirect('/');
         }
         res.render('admin/edit-books', {
@@ -36,7 +45,9 @@ exports.getEditBooks = (req, res, next) => {
             editing: editMode,
             book: book,
         });
-    });
+    })
+    .catch(err => console.log(err));
+       
 };
 
 exports.postEditBooks = (req, res, next) => {
@@ -45,30 +56,39 @@ exports.postEditBooks = (req, res, next) => {
     const updatedImageUrl = req.body.imageUrl;
     const updatedAuthor = req.body.author;
     const updatedDescription = req.body.description;
-    const updatedBook = new Book(
-        bookId, 
-        updatedTitle, 
+
+    const book = new Book(
+        updatedTitle,
         updatedImageUrl, 
         updatedAuthor,
-         updatedDescription
-         );
-    updatedBook.save();
-    res.redirect('/admin/books');
+        updatedDescription,
+        new ObjectId(bookId)
+        );
+    book.save().then(result => {
+        console.log('Updated Book');
+        res.redirect('/admin/books')
+    })
+    .catch(err => console.log(err));
 };
 
 exports.getBooks = (req, res, next) => {
-    Book.fetchAll((books) => {
+    Book.fetchAll().then(books => {
         res.render('admin/book-list-admin', {
             books: books,
             pageTitle: 'Admin List Of Books',
             path: '/admin/books',
-        });
-    });
+    });  
+    })
+    .catch(err => console.log(err));
 };
 
-
-exports.postDeleteBooks = (req, res, next) => {
-    const bookId = req.body.bookId;
-    Book.deleteById(bookId);
-    res.redirect('/admin/books');
-};
+exports.postDeleteProduct = (req, res, next) => {
+    const prodId = req.body.productId;
+    Product.deleteById(prodId)
+      .then(() => {
+        console.log('DESTROYED PRODUCT');
+        res.redirect('/admin/products');
+      })
+      .catch(err => console.log(err));
+  };
+  
