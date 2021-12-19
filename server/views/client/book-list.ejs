@@ -14,7 +14,7 @@
                     <h1 class="product__title"> <%= book.title %></h1>
                 </header>
                 <div class="card__image">
-                    <img src="<%= book.imageUrl %>" alt="<%= book.title %>">
+                    <img src="/<%= book.imageUrl %>" alt="<%= book.title %>">
                 </div>
                 <div class="card__content">
                     <h2 class="product__price"><%= book.author %></h2>
@@ -22,7 +22,9 @@
                 </div>
                 <div class="card__actions">
                     <a href="/books/<%= book._id %>" class="btn">Details</a>
+                    <!-- <% if (isAuthenticated) { %>
                     <%- include('../includes/reservations.ejs', {book: book}) %>
+                    <% } %> -->
 
                 </div>
             </article>

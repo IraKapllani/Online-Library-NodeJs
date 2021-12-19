@@ -7,27 +7,30 @@
 <%- include('../includes/navigation.ejs')%>
 
     <main>
-        <form class="product-form" action="/admin/<% if (editing) { %>edit-books<% } else { %>add-books<% } %>" method="POST">
+        <% if (errorMessage) { %>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
+        <form class="product-form" action="/admin/<% if (editing) { %>edit-books<% } else { %>add-books<% } %>" method="POST" enctype="multipart/form-data">
             <div class="form-control">
                 <label for="title">Title</label>
-                <input type="text" name="title" id="title" value="<% if (editing) { %><%= book.title %><% } %>">
+                <input type="text" name="title" id="title" value="<% if (editing || hasError) { %><%= book.title %><% } %>">
             </div>
             <div class="form-control">
-                <label for="imageUrl">Image Url</label>
-                <input type="text" name="imageUrl" id="imageUrl" value="<% if (editing) { %><%= book.imageUrl %><% } %>">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image">
             </div>
             <div class="form-control">
                 <label for="author">Author</label>
-                <input type="text" name="author" id="author" value="<% if (editing) { %><%= book.author %><% } %>">
+                <input type="text" name="author" id="author" value="<% if (editing || hasError) { %><%= book.author %><% } %>">
             </div>
             <div class="form-control">
                 <label for="description">Description</label>
-                <textarea name="description" id="description" value="<% if (editing) { %><%= book.description %><% } %>"><% if (editing) { %><%= book.description %><% } %></textarea>
+                <textarea name="description" id="description" value="<% if (editing || hasError) { %><%= book.description %><% } %>"><% if (editing) { %><%= book.description %><% } %></textarea>
             </div>
             <% if (editing) { %> 
                 <input type="hidden" value="<%= book._id %>" name="bookId">
              <% } %>
-                
+             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <button class="btn" type="submit"><% if (editing) { %> Update Book <% } else { %> Add Book <% } %> </button>
         </form>
     </main>

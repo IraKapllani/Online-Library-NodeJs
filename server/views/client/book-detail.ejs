@@ -8,10 +8,12 @@
         <h1><%= book.title %> </h1>
         <hr>
         <div>
-            <img src="<%= book.imageUrl %>" alt="<%= book.title %>">
+            <img src="/<%= book.imageUrl %>" alt="<%= book.title %>">
         </div>
         <h2><%= book.author %></h2>
         <p><%= book.description %></h2>
-            <%- include('../includes/reservations.ejs') %>
+            <!-- <% if (isAuthenticated) { %>
+                <%- include('../includes/reservations.ejs', {book: book}) %>
+                <% } %> -->
     </main>
     <%- include('../includes/end.ejs') %>
