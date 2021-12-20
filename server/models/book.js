@@ -23,11 +23,6 @@ const bookSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  },
-  authorsId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Authors',
-    required: true
   }
 });
 

@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
 
 exports.getAddBooks = (req, res, next) => {
+
     res.render('admin/edit-books', {
         pageTitle: 'Add Books',
         path: '/admin/add-books',
@@ -88,6 +89,21 @@ exports.postAddBooks = (req, res, next) => {
         res.redirect('/admin/books');
       })
       .catch(err => {
+        // return res.status(500).render('admin/edit-books', {
+        //     pageTitle: 'Add Book',
+        //     path: '/admin/add-books',
+        //     editing: false,
+        //     hasError: true,
+        //     book: {
+        //         title: title,
+        //         imageUrl: imageUrl,
+        //         author: author,
+        //         description: description
+        //     },
+        //     errorMessage: errors.array()[0].msg,
+        //     validationErrors: []
+        // });
+        // // res.redirect('/500');
         console.log(err);
       });
   };
@@ -131,20 +147,20 @@ exports.postAddBooks = (req, res, next) => {
     const name = req.body.name;
     const bio = req.body.bio;
     const errors = validationResult(req);
-    // if(!errors.isEmpty){
-    //    return res.status(422).render('admin/edit-authors', {
-    //         pageTitle: 'Add Author',
-    //         path: '/admin/add-authors',
-    //         editing: false,
-    //         hasError: true,
-    //         author: {
-    //             name: name,
-    //             bio: bio
-    //         },
-    //         errorMessage: 'Invalid or Null value entered!',
-    //         validationErrors: 'Invalid or Null value entered!'
-    //     });
-    // }
+    if(!errors.isEmpty){
+       return res.status(422).render('admin/edit-authors', {
+            pageTitle: 'Add Author',
+            path: '/admin/add-authors',
+            editing: false,
+            hasError: true,
+            author: {
+                name: name,
+                bio: bio
+            },
+            errorMessage: 'Invalid or Null value entered!',
+            validationErrors: 'Invalid or Null value entered!'
+        });
+    }
     const author = new Authors({
       name: name,
       bio: bio
@@ -154,12 +170,10 @@ exports.postAddBooks = (req, res, next) => {
       .then(result => {
         console.log(result);
         console.log('Created Authors');
+        res.redirect('/admin/authors');
       })
-     .then(result => {
-        res.status(201).json({
-          message: 'Author created successfully!',
-          author: author,
-        })
+      .catch(err => {
+        console.log(err);
       });
   };
 
