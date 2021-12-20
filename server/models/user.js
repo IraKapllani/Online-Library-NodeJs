@@ -11,50 +11,42 @@ const userSchema = new Schema({
       type: String,
       required: true
     },
-    reservations: {
-      items: [
-        {
-          bookId: {
-            type: Schema.Types.ObjectId,
-            ref: 'Book',
-            required: true
-          },
-          quantity: { type: Number, required: true }
-        }
-      ]
-    }
+    name: {
+        type: String,
+        required: true
+      }
   });
 
 
-userSchema.methods.addToReservations = function(book) {
-    const reservationsBookIndex = this.reservations.items.findIndex(cp => {
-      return cp.bookId.toString() === book._id.toString();
-    });
-    let newQuantity = 1;
-    const updatedReservationsItems = [...this.reservations.items];
-    if (reservationsBookIndex >= 0) {
-      newQuantity = this.reservations.items[reservationsBookIndex].quantity + 1;
-      updatedReservationsItems[reservationsBookIndex].quantity = newQuantity;
-    } else {
-        updatedReservationsItems.push({
-        bookId: book._id,
-        quantity: newQuantity
-      });
-    }
-    const updateReservations = {
-      items: updatedReservationsItems
-    };
-    this.reservations = updateReservations;
-    return this.save();
-  };
+// userSchema.methods.addToReservations = function(book) {
+//     const reservationsBookIndex = this.reservations.items.findIndex(cp => {
+//       return cp.bookId.toString() === book._id.toString();
+//     });
+//     let newQuantity = 1;
+//     const updatedReservationsItems = [...this.reservations.items];
+//     if (reservationsBookIndex >= 0) {
+//       newQuantity = this.reservations.items[reservationsBookIndex].quantity + 1;
+//       updatedReservationsItems[reservationsBookIndex].quantity = newQuantity;
+//     } else {
+//         updatedReservationsItems.push({
+//         bookId: book._id,
+//         quantity: newQuantity
+//       });
+//     }
+//     const updateReservations = {
+//       items: updatedReservationsItems
+//     };
+//     this.reservations = updateReservations;
+//     return this.save();
+//   };
 
-  userSchema.methods.removeFromReservations = function(bookId){
-    const updatedReservationsItems = this.reservations.items.filter(item => {
-        return item.bookId.toString() !== bookId.toString();
-      });
-      this.reservations.items = updatedReservationsItems;
-      return this.save();
-  }
+//   userSchema.methods.removeFromReservations = function(bookId){
+//     const updatedReservationsItems = this.reservations.items.filter(item => {
+//         return item.bookId.toString() !== bookId.toString();
+//       });
+//       this.reservations.items = updatedReservationsItems;
+//       return this.save();
+//   }
 
 
 //   userSchema.methods.getReservations = function(book){

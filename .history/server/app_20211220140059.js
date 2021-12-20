@@ -100,7 +100,7 @@ app.use(showRoutes);
 app.use(authRoutes);
 
 app.get('/500', errorController.get500Page);
-app.use(errorController.get404Page);
+// app.use(errorController.get404Page);
 
 mongoose.connect(MONGODB_URI).then(result => { 
         app.listen(3001);
