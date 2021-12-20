@@ -440,9 +440,11 @@ exports.postDeleteCategories = (req, res, next) => {
 
 exports.postDeleteAuthors = (req, res, next) => {
     const authorsId = req.body.authorsId;
+    console.log(req.body);
     Authors.findByIdAndRemove(authorsId)
         .then(() => {
-            res.status(200).json({ message: 'Author deleted.' });
+            console.log('Deleted author');
+            res.redirect('/admin/authors');
         })
         .catch(err => console.log(err));
 };

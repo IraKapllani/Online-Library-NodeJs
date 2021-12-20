@@ -399,32 +399,24 @@ exports.getBooks = (req, res, next) => {
 
 exports.getCategories = (req, res, next) => {
     Categories.find().then(categories => {
-            res.status(200).json({
+            res.render('admin/categories-list-admin', {
                 categories: categories,
-                message: 'categories fetched.'
+                pageTitle: 'Admin List Of categories',
+                path: '/admin/categories',
             });
         })
-        .catch(err => {
-            if (!err.statusCode) {
-              err.statusCode = 500;
-            }
-            next(err);
-          });
+        .catch(err => console.log(err));
 };
 
 exports.getAuthors = (req, res, next) => {
     Authors.find().then(authors => {
-        res.status(200).json({
-            authors: authors,
-            message: 'Authors fetched.'
-        });
+            res.render('admin/authors-list-admin', {
+                authors: authors,
+                pageTitle: 'Admin List Of authors',
+                path: '/admin/authors',
+            });
         })
-        .catch(err => {
-            if (!err.statusCode) {
-              err.statusCode = 500;
-            }
-            next(err);
-          });
+        .catch(err => console.log(err));
 };
 
 exports.postDeleteCategories = (req, res, next) => {
@@ -440,9 +432,11 @@ exports.postDeleteCategories = (req, res, next) => {
 
 exports.postDeleteAuthors = (req, res, next) => {
     const authorsId = req.body.authorsId;
+    console.log(req.body);
     Authors.findByIdAndRemove(authorsId)
         .then(() => {
-            res.status(200).json({ message: 'Author deleted.' });
+            console.log('Deleted author');
+            res.redirect('/admin/authors');
         })
         .catch(err => console.log(err));
 };

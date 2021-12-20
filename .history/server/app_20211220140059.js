@@ -89,15 +89,6 @@ app.use((req, res, next) => {
 });
 
 
-app.use((error, req, res, next) => {
-  console.log(error);
-  const status = error.statusCode || 500;
-  const message = error.message;
-  const data = error.data;
-  res.status(status).json({ message: message, data: data });
-});
-
-
 const adminRoutes = require('./routes/admin');
 const showRoutes = require('./routes/show');
 const authRoutes = require('./routes/auth');
