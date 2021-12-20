@@ -1,0 +1,5 @@
+<form action="/reservations" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button class="btn" type="submit">Reserve this book</bu sytton>
+    <input type="hidden" name="bookId" value="<%= book._id %>">
+</form>

@@ -1,0 +1,59 @@
+<header class="main-header">
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Show List</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/books' ? 'active' : '' %>" href="/books">Books</a>
+            </li>
+            <% if (isAuthenticated) { %>
+            <!-- <li class="main-header__item">
+                <a class="<%= path === '/reservations' ? 'active' : '' %>" href="/reservations">Reservations</a>
+            </li> -->
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/add-books' ? 'active' : '' %>" href="/admin/add-books">Add Books
+                </a>
+            </li> <li class="main-header__item">
+                <a class="<%= path === '/admin/add-categories' ? 'active' : '' %>" href="/admin/add-categories">Add Categories
+                </a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/add-authors' ? 'active' : '' %>" href="/admin/add-authors">Add Authors
+                </a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/books' ? 'active' : '' %>" href="/admin/books">Admin Books
+                </a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/categories' ? 'active' : '' %>" href="/admin/categories">Admin Categories
+                </a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/authors' ? 'active' : '' %>" href="/admin/authors">Admin Authors
+                </a>
+            </li>
+            <% } %>
+        </ul>
+        
+        <ul class="main-header__item-list">
+            <% if (!isAuthenticated) { %>
+            <li class="main-header__item">
+                <a  class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+            </li>
+            <% } else { %>
+            <li class="main-header__item">
+                <form action="/logout" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button class="btn" type="submit">Logout</button>
+                </form>
+            </li>
+            <% } %>
+        </ul>
+        
+    </nav>
+</header>
