@@ -450,7 +450,7 @@ exports.postDeleteAuthors = (req, res, next) => {
               return Authors.findByIdAndRemove(authorsId);
         })
         .then(result => {
-            res.status(200).json({ message: 'Deleted author.' });
+            res.status(200).json({ message: 'Deleted post.' });
           })
           .catch(err => {
             if (!err.statusCode) {
