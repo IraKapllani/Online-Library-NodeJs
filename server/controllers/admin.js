@@ -42,6 +42,7 @@ exports.postAddBooks = (req, res, next) => {
     const author = req.body.author;
     const image = req.file;
     const description = req.body.description;
+    const categories= req.body.categories;
     if(!image) {
         return res.status(422).render('admin/edit-books', {
             pageTitle: 'Add Book',
@@ -51,7 +52,8 @@ exports.postAddBooks = (req, res, next) => {
             book: {
                 title: title,
                 author: author,
-                description: description
+                description: description,
+                categories: categories
             },
             errorMessage: 'Attached file is not an image!',
             validationErrors: []
@@ -68,7 +70,8 @@ exports.postAddBooks = (req, res, next) => {
                 title: title,
                 imageUrl: imageUrl,
                 author: author,
-                description: description
+                description: description,
+                categories: categories
             },
             errorMessage: errors.array()[0].msg,
         });
@@ -79,6 +82,7 @@ exports.postAddBooks = (req, res, next) => {
       author: author,
       imageUrl: imageUrl,
       description: description,
+      categories: categories,
       userId: req.user
     });
     book
@@ -268,6 +272,7 @@ exports.postEditBooks = (req, res, next) => {
     const image = req.file;
     const updatedAuthor = req.body.author;
     const updatedDescription = req.body.description;
+    const updateCategories = req.body.categories;
     const errors = validationResult(req);
     if(!errors.isEmpty){
        return res.status(422).render('admin/edit-books', {
@@ -279,6 +284,7 @@ exports.postEditBooks = (req, res, next) => {
                 title: updatedTitle,
                 author: updatedAuthor,
                 description: updatedDescription,
+                categories: updatedCategories,
                 _id: bookId
             },
             errorMessage: errors.array()[0].msg,
@@ -288,6 +294,7 @@ exports.postEditBooks = (req, res, next) => {
         book.title = updatedTitle;
         book.author = updatedAuthor;
         book.description = updatedDescription;
+        book.categories = updatedCategories;
         if(image){
             book.imageUrl = image.path;
         }
@@ -305,7 +312,8 @@ exports.postEditBooks = (req, res, next) => {
                 book: {
                     title: title,
                     author: author,
-                    description: description
+                    description: description,
+                    categories: categories
                 },
                 errorMessage: errors.array()[0].msg,
                 validationErrors: []
@@ -400,13 +408,17 @@ exports.postEditAuthors = (req, res, next) => {
 
 exports.getBooks = (req, res, next) => {
     Book.find().then(books => {
-            res.render('admin/book-list-admin', {
-                books: books,
-                pageTitle: 'Admin List Of Books',
-                path: '/admin/books',
-            });
-        })
-        .catch(err => console.log(err));
+        res.status(200).json({
+            books: books,
+            message: 'books fetched.'
+        });
+    })
+    .catch(err => {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+        next(err);
+      });
 };
 
 

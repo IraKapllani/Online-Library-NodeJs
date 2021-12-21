@@ -23,7 +23,13 @@ const bookSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  }
+  },
+  categories: [
+    {
+      type: String,
+      required: true
+    }
+  ]
 });
 
 module.exports = mongoose.model('Book', bookSchema);
