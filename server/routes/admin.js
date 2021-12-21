@@ -125,6 +125,21 @@ router.post('/delete-books', isAuth, adminController.postDeleteBooks);
 
 router.delete('/authors/:authorsId', isAuth, adminController.postDeleteAuthors);
 
+router.put(
+    '/author/:authorID',
+    isAuth,
+    [
+      body('name')
+        .trim()
+        .isLength({ min: 5 }),
+      body('bio')
+        .trim()
+        .isLength({ min: 5 })
+    ],
+    adminController.getEditAuthors
+  );
+
+
 router.post('/delete-categories', isAuth, adminController.postDeleteCategories);
 
 
