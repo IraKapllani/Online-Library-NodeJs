@@ -439,7 +439,7 @@ exports.postDeleteCategories = (req, res, next) => {
 };
 
 exports.postDeleteAuthors = (req, res, next) => {
-    const authorsId = req.body.authorsId;
+    const authorsId = req.params.authorsId;
     Authors.findByIdAndRemove(authorsId)
         .then(author => {
             if (!author) {
@@ -447,17 +447,8 @@ exports.postDeleteAuthors = (req, res, next) => {
                 error.statusCode = 404;
                 throw error;
               }
-              return Authors.findByIdAndRemove(authorsId);
         })
-        .then(result => {
-            res.status(200).json({ message: 'Deleted author.' });
-          })
-          .catch(err => {
-            if (!err.statusCode) {
-              err.statusCode = 500;
-            }
-            next(err);
-          });
+        .catch(err => console.log(err));
 };
 
 

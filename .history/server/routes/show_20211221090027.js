@@ -11,7 +11,6 @@ const router = express.Router();
 router.get('/', showController.getIndex);
 router.get('/books', showController.getBooks);
 router.get('/authors', showController.getAuthors);
-router.get('/categories', showController.getCategories);
 router.get('/books/:bookId', showController.getBook);
 // router.get('/reservations', isAuth,  showController.getReservations);
 // router.post('/reservations', isAuth, showController.postReservations);

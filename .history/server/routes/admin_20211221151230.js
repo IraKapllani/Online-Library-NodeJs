@@ -123,7 +123,7 @@ router.post(
 
 router.post('/delete-books', isAuth, adminController.postDeleteBooks);
 
-router.delete('/authors/:authorsId', isAuth, adminController.postDeleteAuthors);
+router.delete('/post/:authorsId', isAuth, adminController.postDeleteAuthors);
 
 router.post('/delete-categories', isAuth, adminController.postDeleteCategories);
 
