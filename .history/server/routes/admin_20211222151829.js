@@ -15,14 +15,15 @@ const isAuth = require('../middleware/is-auth');
 
 
 
-//Get
+router.get('/add-books', isAuth,  adminController.getAddBooks);
+
+router.get('/add-categories', isAuth, adminController.getAddCategories);
+
+router.get('/add-authors', isAuth, adminController.getAddAuthors);
 
 router.get('/authors', isAuth, adminController.getAuthors);
 
 router.get('/categories', isAuth, adminController.getCategories);
-
-
-//Add
 
 router.get('/books', isAuth, adminController.getBooks);
 
@@ -71,11 +72,14 @@ router.post(
     adminController.postAddCategories
   );
 
+router.get('/edit-books/:bookId', isAuth,  adminController.getEditBooks);
 
-  //Edit
+router.get('/edit-categories/:categoriesId', isAuth,  adminController.getEditCategories);
 
-router.put(
-    '/edit-books/:bookId',
+router.get('/edit-authors/:authorsId', isAuth,  adminController.getEditAuthors);
+
+router.post(
+    '/edit-books',
     [
       body('title', 'Invalid or missing value!')
         .isString()
@@ -93,38 +97,29 @@ router.put(
     adminController.postEditBooks
   );
 
-  router.put(
-    '/author/:authorsId',
-    isAuth,
+  router.post(
+    '/edit-authors',
     [
-      body('name')
-        .trim()
-        .isLength({ min: 5 }),
-      body('bio')
-        .trim()
-        .isLength({ min: 5 })
-    ],
+        body('name', 'Invalid or missing value!')
+          .isString()
+          .isLength({ min: 3 })
+          .trim(),
+      ],
+    isAuth,
     adminController.postEditAuthors
   );
- 
 
-  router.put(
-    '/category/:categoriesId',
-    isAuth,
+  router.post(
+    '/edit-categories',
     [
-      body('name')
-        .trim()
-        .isLength({ min: 5 }),
-      body('bio')
-        .trim()
-        .isLength({ min: 5 })
-    ],
-    adminController.postEditAuthors
-
+        body('name', 'Invalid or missing value!')
+          .isString()
+          .isLength({ min: 3 })
+          .trim(),
+      ],
+    isAuth,
+    adminController.postEditCategories
   );
-
-
-  //Delete
 
 router.delete('/books/:bookId', isAuth, adminController.postDeleteBooks);
 
@@ -133,6 +128,18 @@ router.delete('/authors/:authorsId', isAuth, adminController.postDeleteAuthors);
 
 router.delete('/categories/:categoriesId', isAuth, adminController.postDeleteCategories);
 
-
+router.put(
+    '/author/:authorID',
+    isAuth,
+    [
+      body('name')
+        .trim()
+        .isLength({ min: 5 }),
+      body('bio')
+        .trim()
+        .isLength({ min: 5 })
+    ],
+    adminController.getEditAuthors
+  );
 
 module.exports = router;

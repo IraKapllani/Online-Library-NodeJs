@@ -15,14 +15,15 @@ const isAuth = require('../middleware/is-auth');
 
 
 
-//Get
+router.get('/add-books', isAuth,  adminController.getAddBooks);
+
+router.get('/add-categories', isAuth, adminController.getAddCategories);
+
+router.get('/add-authors', isAuth, adminController.getAddAuthors);
 
 router.get('/authors', isAuth, adminController.getAuthors);
 
 router.get('/categories', isAuth, adminController.getCategories);
-
-
-//Add
 
 router.get('/books', isAuth, adminController.getBooks);
 
@@ -71,8 +72,11 @@ router.post(
     adminController.postAddCategories
   );
 
+router.get('/edit-books/:bookId', isAuth,  adminController.getEditBooks);
 
-  //Edit
+router.get('/edit-categories/:categoriesId', isAuth,  adminController.getEditCategories);
+
+router.get('/edit-authors/:authorsId', isAuth,  adminController.getEditAuthors);
 
 router.put(
     '/edit-books/:bookId',
@@ -94,7 +98,7 @@ router.put(
   );
 
   router.put(
-    '/author/:authorsId',
+    '/author/:authorId',
     isAuth,
     [
       body('name')
@@ -104,27 +108,9 @@ router.put(
         .trim()
         .isLength({ min: 5 })
     ],
-    adminController.postEditAuthors
+    adminController.getEditAuthors
   );
  
-
-  router.put(
-    '/category/:categoriesId',
-    isAuth,
-    [
-      body('name')
-        .trim()
-        .isLength({ min: 5 }),
-      body('bio')
-        .trim()
-        .isLength({ min: 5 })
-    ],
-    adminController.postEditAuthors
-
-  );
-
-
-  //Delete
 
 router.delete('/books/:bookId', isAuth, adminController.postDeleteBooks);
 
