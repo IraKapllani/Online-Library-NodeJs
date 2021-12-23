@@ -22,12 +22,12 @@ exports.postAddBooks = (req, res, next) => {
         error.statusCode = 422;
         throw error;
       }
+    const imageUrl = req.file.path;
     const title = req.body.title;
     const author = req.body.author;
     const image = req.file;
     const description = req.body.description;
     const categories= req.body.categories;
-    const imageUrl = image.path;
     const book = new Book({
       title: title,
       author: author,
@@ -144,6 +144,7 @@ exports.postEditBooks = (req, res, next) => {
     const author = req.body.author;
     const description = req.body.description;
     const categories = req.body.categories;
+    let imageUrl = req.body.image;
     if (req.file) {
         imageUrl = req.file.path;
       }
