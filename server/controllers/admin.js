@@ -125,10 +125,6 @@ exports.postAddBooks = (req, res, next) => {
 
 //Unlink file
 
-const clearImage = filePath => {
-    filePath = path.join(__dirname, '..', filePath);
-    fs.unlink(filePath, err => console.log(err));
-  };
   
 
 
@@ -163,7 +159,6 @@ exports.postEditBooks = (req, res, next) => {
           throw error;
         }
         if (imageUrl !== book.imageUrl) {
-          clearImage(book.imageUrl);
         }
         book.title = title;
         book.imageUrl = imageUrl;
