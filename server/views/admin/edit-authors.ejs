@@ -1,0 +1,29 @@
+<%- include('../includes/head.ejs')%>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/book.css">
+</head>
+
+<body>
+<%- include('../includes/navigation.ejs')%>
+
+    <main>
+        <% if (errorMessage) { %>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
+        <form class="product-form" action="/admin/<% if (editing) { %>edit-authors<% } else { %>add-authors<% } %>" method="POST" enctype="multipart/form-data">
+            <div class="form-control">
+                <label for="name">Author Name</label>
+                <input type="text" name="name" id="name" value="">
+            </div>
+            <div class="form-control">
+                <label for="bio">Author Bio</label>
+                <input type="text" name="bio" id="bio" value="">
+            </div>
+            <% if (editing) { %> 
+                <input type="hidden" value="<%= author._id %>" name="authorsId">
+             <% } %>
+             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit"><% if (editing) { %> Update Category <% } else { %> Add Author <% } %> </button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>

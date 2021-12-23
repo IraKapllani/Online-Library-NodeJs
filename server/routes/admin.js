@@ -17,17 +17,18 @@ const isAuth = require('../middleware/is-auth');
 
 //Get
 
-router.get('/authors', isAuth, adminController.getAuthors);
+router.get('/admin/authors', isAuth, adminController.getAuthors);
 
-router.get('/categories', isAuth, adminController.getCategories);
+router.get('/admin/categories', isAuth, adminController.getCategories);
 
+router.get('/admin/books', isAuth, adminController.getBooks);
 
 //Add
 
-router.get('/books', isAuth, adminController.getBooks);
+
 
 router.post(
-    '/add-books',
+    '/admin/add-books',
     [
       body('title', 'Invalid or missing value!')
         .isString()
@@ -46,7 +47,7 @@ router.post(
   );
 
   router.post(
-    '/add-authors',
+    '/admin/add-authors',
     isAuth,
     [
         body('name', 'Invalid or missing value!')
@@ -60,7 +61,7 @@ router.post(
 
 
   router.post(
-    '/add-categories',
+    '/admin/add-categories',
     [
         body('name', 'Invalid or missing value!')
           .isString()
@@ -75,7 +76,7 @@ router.post(
   //Edit
 
 router.put(
-    '/edit-books/:bookId',
+    '/admin/edit-books/:bookId',
     [
       body('title', 'Invalid or missing value!')
         .isString()
@@ -94,7 +95,7 @@ router.put(
   );
 
   router.put(
-    '/author/:authorsId',
+    '/admin/author/:authorsId',
     isAuth,
     [
       body('name')
@@ -109,7 +110,7 @@ router.put(
  
 
   router.put(
-    '/category/:categoriesId',
+    '/admin/category/:categoriesId',
     isAuth,
     [
       body('name')
@@ -126,12 +127,12 @@ router.put(
 
   //Delete
 
-router.delete('/books/:bookId', isAuth, adminController.postDeleteBooks);
+router.delete('/admin/books/:bookId', isAuth, adminController.postDeleteBooks);
 
-router.delete('/authors/:authorsId', isAuth, adminController.postDeleteAuthors);
+router.delete('/admin/authors/:authorsId', isAuth, adminController.postDeleteAuthors);
 
 
-router.delete('/categories/:categoriesId', isAuth, adminController.postDeleteCategories);
+router.delete('/admin/categories/:categoriesId', isAuth, adminController.postDeleteCategories);
 
 
 

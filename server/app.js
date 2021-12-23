@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const errorController = require('./controllers/error');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-// const csrf = require('csurf');
+const cors = require('cors');
 const flash = require('connect-flash');
 const User = require('./models/user');
 const multer = require('multer');
@@ -60,33 +60,7 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-
-
-
-
-// app.use((req, res, next) => {
-//     if (!req.session.user) {
-//       return next();
-//     }
-//     User.findById(req.session.user._id)
-//       .then(user => {
-//           if(!user){
-//               return next();
-//           }
-//         req.user = user;
-//         next();
-//       })
-//       .catch(err => { throw new Error(err)});
-//   });
-
-//   app.use(csrfProtection);
-//   app.use(flash());
-
-//   app.use((req, res, next)=> {
-//     res.locals.isAuthenticated = req.session.isLoggedIn;
-//     res.locals.csrfToken = req.csrfToken();
-//     next();
-// });
+app.use(cors());
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -113,7 +87,7 @@ const authRoutes = require('./routes/auth');
 
 
 
-app.use('/admin', adminRoutes);
+app.use(adminRoutes);
 app.use(showRoutes);
 app.use(authRoutes);
 
