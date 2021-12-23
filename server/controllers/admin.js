@@ -100,8 +100,7 @@ exports.postAddBooks = (req, res, next) => {
     const bio = req.body.bio;
     const author = new Authors({
       name: name,
-      bio: bio,
-      userId: req.user
+      bio: bio
     });
     author
         .save()

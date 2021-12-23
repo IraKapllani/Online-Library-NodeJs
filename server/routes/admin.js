@@ -55,7 +55,6 @@ router.post(
           .isLength({ min: 3 })
           .trim(),
       ],
-    isAuth,
     adminController.postAddAuthors
   );
 
