@@ -159,8 +159,6 @@ exports.postEditBooks = (req, res, next) => {
           error.statusCode = 404;
           throw error;
         }
-        if (imageUrl !== book.imageUrl) {
-        }
         book.title = title;
         book.imageUrl = imageUrl;
         book.description = description;

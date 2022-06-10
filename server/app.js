@@ -14,19 +14,7 @@ const multer = require('multer');
 const MONGODB_URI = 'mongodb+srv://ira:password1234@cluster0.trwjx.mongodb.net/library';
 
 const app = express();
-const store = new MongoDBStore({
-      uri: MONGODB_URI,
-      collection: 'sessions'
-});
 
-app.use(session({
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: false,
-    store: store
-}));
-
-// const csrfProtection = csrf();
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, 'images');
@@ -49,9 +37,6 @@ const fileStorage = multer.diskStorage({
     }
   };
 
-app.set('view engine', 'EJS');
-app.set('views', 'views');
-
 
 app.use(bodyParser.json());
 app.use(
@@ -73,7 +58,6 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-  console.log(error);
   const status = error.statusCode || 500;
   const message = error.message;
   const data = error.data;
@@ -86,13 +70,11 @@ const showRoutes = require('./routes/show');
 const authRoutes = require('./routes/auth');
 
 
-
 app.use(adminRoutes);
 app.use(showRoutes);
 app.use(authRoutes);
 
-// app.get('/500', errorController.get500Page);
-// app.use(errorController.get404Page);
+
 
 mongoose.connect(MONGODB_URI).then(result => { 
         app.listen(3001);
